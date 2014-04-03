@@ -28,5 +28,7 @@ These days cameras are everywhere and ridiculously cheap.
 
 Cameras are now part of our social lives. Every 2 minutes, we take more pictures as the whole humanity took in the 1800s.
 
-## Image	Formation,	Light	and	Light	sources,	Photometry
+## Image Formation, Light and Light sources, Photometry
+
+### Image formation
 
