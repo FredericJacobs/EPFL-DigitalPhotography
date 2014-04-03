@@ -2,6 +2,7 @@
 
 ## Some good to know history
 
+
 The camera obscura (Latin; camera for "vaulted chamber/room", obscura for "dark", together "darkened chamber/room"; plural: camera obscuras or camerae obscurae) is an optical device that projects an image of its surroundings on a screen. It is used in drawing and for entertainment, and was one of the inventions that led to photography and the camera. The device consists of a box or room with a hole in one side. Light from an external scene passes through the hole and strikes a surface inside, where it is reproduced, rotated 180 degrees (thus upside-down), but with color and perspective preserved. The image can be projected onto paper, and can then be traced to produce a highly accurate representation. Known since Aristotle (350AD), Da Vinci (1500) … 
 
 The magic lantern or Laterna Magica is an early type of image projector developed in the 17th century.
@@ -31,3 +32,7 @@ Cameras are now part of our social lives. Every 2 minutes, we take more pictures
 
 ### Image formation
 
+
+## Sources
+
+Mostly Wikipedia and EPFL slides.
