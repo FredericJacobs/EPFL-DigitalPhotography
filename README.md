@@ -15,14 +15,13 @@ It’s only in the 20th century that photography became available to everyone. C
 
 Now to the part we are concerned with: **Electronic Photography**.
 
-In 1937, Chester Carlson came up with the Xerography. Xerography (or electrophotography) is a dry photocopying technique invented by Chester Carlson in 1938, for which he was awarded U.S. Patent 2,297,691 on October 6, 1942. Carlson originally called his invention electrophotography. It was later renamed xerography—from theGreek roots ξηρός xeros "dry" and -γραφία -graphia "writing"—to emphasize that, unlike reproduction techniques then in use such as cyanotype, this process used no liquid chemicals.
+- In 1937, Chester Carlson came up with the Xerography. Xerography (or electrophotography) is a dry photocopying technique invented by Chester Carlson in 1938, for which he was awarded U.S. Patent 2,297,691 on October 6, 1942. Carlson originally called his invention electrophotography. It was later renamed xerography—from theGreek roots ξηρός xeros "dry" and -γραφία -graphia "writing"—to emphasize that, unlike reproduction techniques then in use such as cyanotype, this process used no liquid chemicals.
+- In 1969, the charge-coupled device was invented at AT&T Bell Labs by Willard Boyle and George E. Smith. A charge-coupled device (CCD) is a device for the movement of electrical charge, usually from within the device to an area where the charge can be manipulated, for example conversion into a digital value. This is achieved by "shifting" the signals between stages within the device one at a time. CCDs move charge between capacitive bins in the device, with the shift allowing for the transfer of charge between bins.
+- In 1975, - Steven Sasson from Kodak built the first digital camera with a Fairchild-CCD. (100x 100 pixels)
+- In 1981, Sony made available the first still video camera, Mavica. 
+- In 1988, first flatbed scanners.
+- In 1994, Apple made first colour digital camera under $1000.
 
-In 1969, the charge-coupled device was invented at AT&T Bell Labs by Willard Boyle and George E. Smith. A charge-coupled device (CCD) is a device for the movement of electrical charge, usually from within the device to an area where the charge can be manipulated, for example conversion into a digital value. This is achieved by "shifting" the signals between stages within the device one at a time. CCDs move charge between capacitive bins in the device, with the shift allowing for the transfer of charge between bins.
-
-In 1975, - Steven Sasson from Kodak built the first digital camera with a Fairchild-CCD. (100x 100 pixels)
-In 1981, Sony made available the first still video camera, Mavica. 
-In 1988, first flatbed scanners.
-In 1994, Apple made first colour digital camera under $1000.
 
 These days cameras are everywhere and ridiculously cheap.
 
