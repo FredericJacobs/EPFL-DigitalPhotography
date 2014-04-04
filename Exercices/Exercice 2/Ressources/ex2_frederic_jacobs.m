@@ -53,15 +53,24 @@ plot(plotRange, plotDataset);
 title('1.3: Graph of camera sensitivities');
 xlabel('Wavelength [nm]');
 ylabel('Camera sensitivity');
-legend('Camera sensitivity for sigma = 10', 'Camera sensitivity for sigma = 100');
+annotation('textbox',...
+    [0.510714285714284 0.611904761904762 0.317857142857141 0.0833333333333339],...
+    'String',{'Smooth curves are the result of high sensitivity (sigma = 100)'},...
+    'FitBoxToText','off');
+annotation('textbox',...
+    [0.301 0.428571428571429 0.356142857142857 0.102380952380961],...
+    'String',{'Angular curves are the result of the use of a less sensitivity (signma = 10)'},...
+    'FitBoxToText','off');
 
 % TO-DO: What effects will the different sensistivity functions have on the
 % final image?
 
+% We notice that a more sensitive function results on a smoother curve.
+% Similarly, the final image will have additional details.
+
 pause;
 
 close all;
-clear all;
 
 %% Answer to Question 2
 
