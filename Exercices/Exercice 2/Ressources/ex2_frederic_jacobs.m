@@ -20,11 +20,12 @@ figure
 plotDataset = [normalizeDataset(D65), normalizeDataset(A), normalizeDataset(F2)];
 plot(plotRange ,plotDataset);
 title('1.1 : Graph of D65, A and F2 illuminants');
-setAxisLabels();
+xlabel('Wavelength [nm]');
+ylabel('Relative Spectral Power');
 legend('D65', 'A','F2');
 pause;
 
-% TO-DO: Can you already determine the effect of the different illuminants
+% Can you already determine the effect of the different illuminants
 % on the final image?
 
 %%% 1.2 Drawing reflectance
@@ -34,11 +35,12 @@ pause;
 vector1 = S(:,130,160);
 vector2 = S(:,290,320);
 
-plotDataset = [normalizeDataset(D65), normalizeDataset(A), normalizeDataset(F2), normalizeDataset(vector1), normalizeDataset(vector2)];
+plotDataset = [normalizeDataset(vector1), normalizeDataset(vector2)];
 plot(plotRange ,plotDataset);
-title('1.2: Graph of D65, A and F2 illuminants with respective reflectance spectras');
-setAxisLabels();
-legend('D65', 'A','F2', 'Reflectance of (130, 160)', 'Reflectance of (290, 320)');
+title('1.2: Graph of respective reflectance spectra');
+xlabel('Wavelength [nm]');
+ylabel('Reflectance factor');
+legend('Reflectance of (130, 160)', 'Reflectance of (290, 320)');
 
 pause;
 
@@ -46,11 +48,12 @@ pause;
 
 %%% 1.3
 
-plotDataset = [normalizeDataset(D65), normalizeDataset(A), normalizeDataset(F2), normalizeDataset(vector1), normalizeDataset(vector2), computeCameraSensitivity(10), computeCameraSensitivity(100)];
+plotDataset = [computeCameraSensitivity(10), computeCameraSensitivity(100)];
 plot(plotRange, plotDataset);
 title('1.3: Graph of camera sensitivities');
-setAxisLabels();
-legend('D65', 'A','F2', 'Reflectance of (130, 160)', 'Reflectance of (290, 320)', 'Camera sensitivity for sigma = 10', 'Camera sensitivity for sigma = 100');
+xlabel('Wavelength [nm]');
+ylabel('Camera sensitivity');
+legend('Camera sensitivity for sigma = 10', 'Camera sensitivity for sigma = 100');
 
 % TO-DO: What effects will the different sensistivity functions have on the
 % final image?
@@ -75,11 +78,6 @@ clear all;
 %% Answer to Question 6
 
 
-end
-
-function setAxisLabels()
-xlabel('Wavelength [nm]');
-ylabel('Relative Power');
 end
 
 % function to normalize a dataset
