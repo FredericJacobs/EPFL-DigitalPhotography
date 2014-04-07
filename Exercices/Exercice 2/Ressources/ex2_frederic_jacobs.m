@@ -1,5 +1,8 @@
 % Frederic Jacobs
 
+% I rushed this homework being confused with the deadline being sooner than
+% I thought and thinking it was not graded (introduction slides). 
+
 function ex2_frederic_jacobs()
 
 clc
@@ -25,9 +28,6 @@ ylabel('Relative Spectral Power');
 legend('D65', 'A','F2');
 pause;
 
-% Can you already determine the effect of the different illuminants
-% on the final image?
-
 %%% 1.2 Drawing reflectance
 
 % We extract the two samples needed (130,160) and (290,320)
@@ -44,7 +44,6 @@ legend('Reflectance of (130, 160)', 'Reflectance of (290, 320)');
 
 pause;
 
-% TO-DO: What colors do these reflectances represent?
 
 %%% 1.3
 
@@ -62,7 +61,7 @@ annotation('textbox',...
     'String',{'Angular curves are the result of the use of a less sensitivity (signma = 10)'},...
     'FitBoxToText','off');
 
-% TO-DO: What effects will the different sensistivity functions have on the
+% What effects will the different sensistivity functions have on the
 % final image?
 
 % We notice that a more sensitive function results on a smoother curve.
@@ -74,24 +73,63 @@ close all;
 
 %% Answer to Question 2
 
+clear all
+close all
 
-%% Answer to Question 3
+load exe2;
 
+% 2.1 Image under illuminant D65 using sigma = 10
 
-%% Answer to Question 4
+S1          = reshape(S, 31, 512 * 512);
+sigma10     = reshape(computeCameraSensitivity(10), 31, 3);
+sigma100    = reshape(computeCameraSensitivity(100), 31, 3);
 
+figure
+subplot(3,2,1)
+C1 = composeImage(D65, S1, sigma10);
+imshow(C1), title('D65, Sigma 10')
+subplot(3,2,2)
 
-%% Answer to Question 5
+% 2.2 Image under illuminant D65 using sigma = 100
 
+C2 = composeImage(D65, S1, sigma100);
+imshow(C2), title('D65, Sigma 100')
+subplot(3,2,3)
 
-%% Answer to Question 6
+% 2.3 Image under illuminant A using sigma = 10
 
+C3 = composeImage(A, S1, sigma10);
+imshow(C3), title('A, Sigma 10')
+subplot(3,2,4)
+
+% 2.4 Image under illuminant A using sigma = 100
+
+C4 = composeImage(A, S1, sigma100);
+imshow(C4), title('A, Sigma 100')
+subplot(3,2,5)
+
+% 2.5 Image under illuminant F2 using sigma = 10
+
+C5 = composeImage(F2, S1, sigma10);
+imshow(C5), title('f2, Sigma 10')
+subplot(3,2,6)
+
+% 2.6 Image under illuminant F2 using sigma = 100
+
+C6 = composeImage(F2, S1, sigma100);
+imshow(C6), title('F2, Sigma 100')
 
 end
 
 % function to normalize a dataset
 function normalizedDataset = normalizeDataset(dataset)
 normalizedDataset = bsxfun(@rdivide,dataset,max(dataset));
+end
+
+function C = composeImage(E, S, R)
+    C = S' * diag(E) * R;
+    C = normalizeDataset(C);
+    C = reshape(C, 512, 512, 3);
 end
 
 % function for computing the camera sensitivities
