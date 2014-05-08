@@ -105,18 +105,9 @@ pause;
 
 %%%% 4.1
 
-subplot(3,1,1); 
-imhist(rIm1, 255); 
-title('histogram RED');
-
-subplot(3,1,2); 
-imhist(bIm1, 255);
-title('histogram GREEN');
-
-
-subplot(3,1,3); 
-imhist(rIm1, 255); 
-title('histogram BLUE');
+subplot(3,1,1); imhist(rIm1, 255); title('histogram RED');
+subplot(3,1,2); imhist(bIm1, 255); title('histogram GREEN');
+subplot(3,1,3); imhist(rIm1, 255); title('histogram BLUE');
 
 pause;
 
@@ -165,9 +156,7 @@ pause;
 %%%% 4.4
 % As you saw, the Gray World algorithm has some limitations, especially if
 % we have an image with a predominant color. With the weighted gray world
-% algorithm, we give each patch equal weight, independent of its size. That
-% gives us a better balancing, especially in cases where there is a
-% predominant color that would biais the Gray world algorithm.
+% algorithm, we
 
 %% exe 5 MaxRGB
 %%%% 5.1
