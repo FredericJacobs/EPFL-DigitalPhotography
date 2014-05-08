@@ -19,6 +19,11 @@ function gCorrected = gCorrection(Im, gamma)
     gCorrected = normalizeImage(Im);
 end
 
+
+function meanvalue = computeMean(imageChannel)
+    meanvalue = mean(mean(mean(imageChannel)));
+end
+
 %% Initialization
 gamma = 2.4;
 Im1 = imread('Im1.jpg');
@@ -49,14 +54,50 @@ close;
 
 %%%% 3.1
 
+rIm1 = Im1gCorrected(:,:,1);
+gIm1 = Im1gCorrected(:,:,2);
+bIm1 = Im1gCorrected(:,:,3);
+
+rIm2 = Im2gCorrected(:,:,1);
+gIm2 = Im2gCorrected(:,:,2);
+bIm2 = Im2gCorrected(:,:,3);
+
+aR_Im1 = computeMean(rIm1);
+aG_Im1 = computeMean(gIm1);
+aB_Im1 = computeMean(bIm1);
+
+aR_Im2 = computeMean(rIm2);
+aG_Im2 = computeMean(gIm2);
+aB_Im2 = computeMean(bIm2);
+
 %%%% 3.2
+
+a1 = (aR_Im1+aG_Im1+aB_Im1)/3;
+a2 = (aR_Im2+aG_Im2+aB_Im2)/3;
 
 %%%% 3.3
 
+rescaledIm1(:,:)= rIm1*a1/aR_Im1;
+rescaledIm1(:,:,2)= gIm1*a1/aG_Im1;
+rescaledIm1(:,:,3)= bIm1*a1/aB_Im1;
+
+rescaledIm2(:,:)= rIm2*a2/aR_Im2;
+rescaledIm2(:,:,2)= gIm2*a2/aG_Im2;
+rescaledIm2(:,:,3)= bIm2*a2/aB_Im2;
+
 %%%% 3.4
 
+subplot(2,2,1);imshow(Im1gCorrected);title('Image 1 - Gamma Corrected');
+subplot(2,2,2);imshow(rescaledIm1);title('Image 1 - Gray World Corrected');
+subplot(2,2,3);imshow(Im2gCorrected);title('Image 2 - Gamma Corrected');
+subplot(2,2,4);imshow(rescaledIm2);title('Image 2 - Gray World Corrected');pause;
+
 %%%% 3.5
-% write your answer here
+% As given, the Gray World algorithm assumes that the average reflectance spectrum of all objects in an image is flat.
+% That assumption is obviously not always true. And hence averagine the
+% intensity in all color channels would result in a misrepresentation of
+% the original scene.
+
 
 %% exe 4 Weighted Grey World
 
