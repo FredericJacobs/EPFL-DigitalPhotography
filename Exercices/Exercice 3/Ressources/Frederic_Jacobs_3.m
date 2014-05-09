@@ -2,6 +2,8 @@ function Frederic_Jacobs_3()
 clc
 close all
 clear all
+gamma = 2.4;
+
 
 function nM = normalizeMatrix(dataset)
     nM = dataset/max(max(max(dataset)));
@@ -13,8 +15,11 @@ function nM = normalizeImage(image)
     nM(:,:,3) = normalizeMatrix(image(:,:,3));
 end
 
+function gimshow(image)
+    imshow(gCorrection(image, gamma));
+end
+
 function gCorrected = gCorrection(Im, gamma)
-    Im = normalizeImage(Im);
     Im = power(Im(:,:,:), 1/gamma);
     gCorrected = normalizeImage(Im);
 end
@@ -25,7 +30,6 @@ function meanvalue = computeMean(imageChannel)
 end
 
 %% Initialization
-gamma = 2.4;
 Im1 = imread('Im1.jpg');
 Im1 = im2double(Im1);
 
@@ -38,61 +42,74 @@ Im3 = im2double(Im3);
 Im4 = imread('Im4.png');
 Im4 = im2double(Im4);
 
-Im1gCorrected = gCorrection(Im1, gamma);
-Im2gCorrected = gCorrection(Im2, gamma);
-Im3gCorrected = gCorrection(Im3, gamma);
-Im4gCorrected = gCorrection(Im4, gamma);
+subplot(2,2,1);
+gimshow(Im1);
+title('Image 1 - Gamma Corrected');
 
-subplot(2,2,1);imshow(Im1gCorrected);title('Image 1 - Gamma Corrected');
-subplot(2,2,2);imshow(Im2gCorrected);title('Image 2 - Gamma Corrected');
-subplot(2,2,3);imshow(Im3gCorrected);title('Image 3 - Gamma Corrected');
-subplot(2,2,4);imshow(Im4gCorrected);title('Image 4 - Gamma Corrected');pause;
+subplot(2,2,2);
+gimshow(Im2);
+title('Image 2 - Gamma Corrected');
+
+subplot(2,2,3);
+gimshow(Im3);
+title('Image 3 - Gamma Corrected');
+
+subplot(2,2,4);
+gimshow(Im4);
+title('Image 4 - Gamma Corrected');
+
+pause;
 
 close;
 
-%% exe 3Grey World
-
+%% exe 3 Gray World
+    
+function processedImage = grayWorld(image)  
 %%%% 3.1
 
-rIm1 = Im1gCorrected(:,:,1);
-gIm1 = Im1gCorrected(:,:,2);
-bIm1 = Im1gCorrected(:,:,3);
+rIm = image(:,:,1);
+gIm = image(:,:,2);
+bIm = image(:,:,3);
 
-rIm2 = Im2gCorrected(:,:,1);
-gIm2 = Im2gCorrected(:,:,2);
-bIm2 = Im2gCorrected(:,:,3);
-
-aR_Im1 = computeMean(rIm1);
-aG_Im1 = computeMean(gIm1);
-aB_Im1 = computeMean(bIm1);
-
-aR_Im2 = computeMean(rIm2);
-aG_Im2 = computeMean(gIm2);
-aB_Im2 = computeMean(bIm2);
+aR = computeMean(rIm);
+aG = computeMean(gIm);
+aB = computeMean(bIm);
 
 %%%% 3.2
 
-a1 = (aR_Im1+aG_Im1+aB_Im1)/3;
-a2 = (aR_Im2+aG_Im2+aB_Im2)/3;
+a = (aR+aG+aB)/3;
 
 %%%% 3.3
 
-rescaledIm1(:,:)= rIm1*a1/aR_Im1;
-rescaledIm1(:,:,2)= gIm1*a1/aG_Im1;
-rescaledIm1(:,:,3)= bIm1*a1/aB_Im1;
+processedImage(:,:)     = rIm*a/aR;
+processedImage(:,:,2)   = gIm*a/aG;
+processedImage(:,:,3)   = bIm*a/aB;
 
-rescaledIm2(:,:)= rIm2*a2/aR_Im2;
-rescaledIm2(:,:,2)= gIm2*a2/aG_Im2;
-rescaledIm2(:,:,3)= bIm2*a2/aB_Im2;
+end
 
 %%%% 3.4
 
-subplot(2,2,1);imshow(Im1gCorrected);title('Image 1 - Gamma Corrected');
-subplot(2,2,2);imshow(rescaledIm1);title('Image 1 - Gray World Corrected');
-subplot(2,2,3);imshow(Im2gCorrected);title('Image 2 - Gamma Corrected');
-subplot(2,2,4);imshow(rescaledIm2);title('Image 2 - Gray World Corrected');
+grayWorld1 = grayWorld(Im1); 
+grayWorld2 = grayWorld(Im2);
+
+subplot(2,2,1);
+imshow(Im1);
+title('Image 1');
+
+subplot(2,2,2);
+gimshow(grayWorld1);
+title('Image 1 - Gray World');
+
+subplot(2,2,3);
+imshow(Im2);
+title('Image 2');
+
+subplot(2,2,4);
+gimshow(grayWorld2);
+title('Image 2 - Gray World');
 
 pause;
+close;
 
 %%%% 3.5
 % As given, the Gray World algorithm assumes that the average reflectance spectrum of all objects in an image is flat.
@@ -102,32 +119,42 @@ pause;
 
 
 %% exe 4 Weighted Grey World
-
+ 
 %%%% 4.1
 
+rIm2 = Im2(:,:,1);
+gIm2 = Im2(:,:,2);
+bIm2 = Im2(:,:,3);
+
 subplot(3,1,1); 
-imhist(rIm1, 255); 
-title('histogram RED');
+imhist(rIm2, 255); 
+title('Red channel histogram');
 
 subplot(3,1,2); 
-imhist(bIm1, 255);
-title('histogram GREEN');
+imhist(gIm2, 255);
+title('Green channel histogram');
 
 
 subplot(3,1,3); 
-imhist(rIm1, 255); 
-title('histogram BLUE');
+imhist(bIm2, 255); 
+title('Blue channel histogram');
 
 pause;
-
+close;
 
 %%%% 4.2
 
 % The imhist function gives us the bin repartition of the given image
 
-[rDistribution, rBins] = imhist(rIm2, 255);
-[gDistribution, gBins] = imhist(gIm2, 255);
-[bDistribution, bBins] = imhist(bIm2, 255);
+function processedImage = weightedGrayWorld(image)
+
+rIm = image(:,:,1);
+gIm = image(:,:,2);
+bIm = image(:,:,3);
+    
+[rDistribution, rBins] = imhist(rIm, 255);
+[gDistribution, gBins] = imhist(gIm, 255);
+[bDistribution, bBins] = imhist(bIm, 255);
 
 % As hinted, we use the sign function to find out what pixels are used
 
@@ -145,22 +172,24 @@ bAverage = (bCount.'*bBins)/gTotal;
 
 %%%% 4.3
 
-Im2Average = (rAverage + gAverage + bAverage)/3;
+ImAverage = (rAverage + gAverage + bAverage)/3;
 
-Im2Resampled(:,:)     = (rIm2*Im2Average)/rAverage;
-Im2Resampled(:,:,2)   = (gIm2*Im2Average)/gAverage;
-Im2Resampled(:,:,3)   = (bIm2*Im2Average)/bAverage;
+processedImage(:,:)     = (rIm*ImAverage)/rAverage;
+processedImage(:,:,2)   = (gIm*ImAverage)/gAverage;
+processedImage(:,:,3)   = (bIm*ImAverage)/bAverage;
+
+end
 
 subplot(2,1,1);
-imshow(rescaledIm2);
-title('Image 2 - Grey World Algorithm');
-
+gimshow(grayWorld(Im2));
+title('Image 2 - Gray World algorithm');
 
 subplot(2,1,2);
-imshow(Im2Resampled);
-title('Image 2 - Weighted Grey World algorithm');
+gimshow(weightedGrayWorld(Im2));
+title('Image 2 - Weighted Gray World algorithm');
 
 pause;
+close;
 
 %%%% 4.4
 % As you saw, the Gray World algorithm has some limitations, especially if
@@ -170,21 +199,136 @@ pause;
 % predominant color that would biais the Gray world algorithm.
 
 %% exe 5 MaxRGB
+
+function processedImage = MaxRGB (image)
+  
 %%%% 5.1
+
+S           = sum(image, 3);
+[~, idx]    = max(S(:));
+[x, y]      = ind2sub(size(S), idx);
 
 %%%% 5.2
 
+point   = image(x, y, :);
+gIm     = image(:, :, 2);
+bIm     = image(:, :, 3);
+ 
+rgRatio = point(1) / point(2);
+rbRatio = point(1) / point(3);
+ 
+processedImage          = image;
+processedImage(:, :, 2) = gIm * rgRatio;
+processedImage(:, :, 3) = bIm * rbRatio;
+
+end
+
 %%%% 5.3
+ 
+subplot(3,2,1);
+imshow(Im1);
+title('Image 1 - Original');
+
+subplot(3,2,2);
+gimshow(MaxRGB(Im1));
+title('Image 1 - MaxRGB');
+ 
+subplot(3,2,3);
+imshow(Im2);
+title('Image 1 - Original');
+
+subplot(3,2,4);
+gimshow(MaxRGB(Im2));
+title('Image 2 - MaxRGB');
+ 
+subplot(3,2,5);
+imshow(Im3);
+title('Image 3 - Original');
+
+subplot(3,2,6);
+gimshow(MaxRGB(Im3));
+title('Image 3 - MaxRGB');
+ 
+pause;
+close;
 
 %%%% 5.4
 
+function point = getUserPoint(image)
+   gimshow(image);
+   [x, y] = ginput(1);
+   point = image(uint32(x), uint32(y), :);
+end
+ 
+function processedImage = MaxRGB2(image)
+    point   = getUserPoint(image);
+
+    gIm     = image(:, :, 2);
+    bIm     = image(:, :, 3);
+ 
+    rgRatio = point(1) / point(2);
+    rbRatio = point(1) / point(3);
+ 
+    processedImage          = image;
+    processedImage(:, :, 2) = gIm * rgRatio;
+    processedImage(:, :, 3) = bIm * rbRatio;
+end
+ 
+maxIm1 = MaxRGB2(Im1);
+gimshow(maxIm1);
+pause;
+
+maxIm2 = MaxRGB2(Im2);
+gimshow(maxIm2);
+pause;
+
+maxIm3 = MaxRGB2(Im3);
+gimshow(maxIm3);
+pause;
+
+% The performance of this algorithm is faster at the computational level
+% given the fact that the first part that consisted of finding the
+% brightest point is no more needed.
+
 %%%% 5.5
 
-%%%% 5.6, 5.7, and 5.8
-% write your answer here
+n = [3, 3];
+preprocessedImage(:, :)    = medfilt2(Im3(:, :, 1), n);
+preprocessedImage(:, :, 2) = medfilt2(Im3(:, :, 2), n);
+preprocessedImage(:, :, 3) = medfilt2(Im3(:, :, 3), n);
+ 
+subplot(1,2,1);
+imshow(Im3);
+title('Image 3');
+
+subplot(1,2,2);
+gimshow(MaxRGB(preprocessedImage));
+title('Image 3 - Median filter and MaxRGB');
+pause;
+close;
+
+%%%% 5.6
+% What?s the advantage of above mentioned pre-processing step (median filtering)?
+
+% The pre-processing step seems to remove a lot of the noise in the
+% picture. The reduction of noise also allows MaxRGB find a proper scaling
+% thanks to the removal of the brightest pixels.
+
+%%%% 5.7
+% When does it give good results?
+
+% If the image is not too contrasted the result should be well balanced.
+
+%%%% 5.8
+% What are its limitations?
+
+% As we've seen in the image with noise, the algorithm doesn't perceive the
+% brightest pixel correctly (mistaken noise for image pixels). If there's a
+% very bright spot on the picture, it's likely to not work properly.
+
 
 %% exe 6 White Balance based on Illuminant Estimation
-%load exe3.mat
+
 
 %%%% 6.1
 
@@ -192,11 +336,17 @@ pause;
 
 %%%% 6.3
 
+
+
 %%%% 6.4
 
-%%%% 6.5
-% write your answer here
+gimhow(grayWorld(Im4))
 
+%%%% 6.5
+
+% The limitation is that you need to know the illuminant spectrum and
+% camera sensitivities. That's a lot of information that's required for an
+% image.
 
 
 end
