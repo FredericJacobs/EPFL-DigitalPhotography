@@ -126,9 +126,9 @@ close all;
 
 demoChrominance = demosaic(chrominance);
 
-nShow(demoChrominance);
+nShow(demoChrominance);title('Demosaiced chrominance');
 
-pause;title('Demosaiced chrominance');
+pause;
 close all;
 
 % 2.4
@@ -144,13 +144,36 @@ nShow(final);title('Result');
 pause;
 close all;
 
-
 %% tone mapping
 % 3.1
 
+sigmaH = 3;
+GH = fspecial('gaussian', 2*3*sigmaH, sigmaH);
+ICFA  = normalizeDataset(im2);
+ICFAM =  mean2(ICFA);
+
+H     = conv2(ICFA,GH,'same')+ICFAM/2;
+
+nShow(H);
+
+pause;
+close all;
+
 % 3.2
 
+ICFAmax = max(im2);
+firstfactor = H + ICFAmax;
+secondfactor = (ICFA /(ICFA + H));
+ibip = firstfactor * secondfactor 
+
+nShow(Ibip);
+
+pause;
+close all;
+
 % 3.3
+
+
 
 % 3.4
 
@@ -158,7 +181,18 @@ close all;
 
 % 3.6
 
+result = post_processing(tempresult)
+
+nShow(result);
+
+pause;
+close all;
+
 % 3.7
+
+% The tone mapped version would obviously look better. Tone mapping
+% transformed the brightness of pixels so that the image looks appealing
+% and uses the dynamic range of the target device.
 
 
 end
